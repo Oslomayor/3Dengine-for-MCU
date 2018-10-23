@@ -3,13 +3,18 @@
 #include <stdio.h>
 #include <math.h>
 
-/* size of 3D Buff */
+/* size of 3D & 2D Buff */
 #define SIZE 255
+/* size of screen */
+#define SCREEN_X 128
+#define SCREEN_Y 64
 
 /* 3D data Buff */
 char $3D_Buff[SIZE][SIZE][SIZE]
-/* display data Buff */
-char Display_Buff[SIZE][SIZE][SIZE]
+/* 2D data Buff, projected from 3D data */
+char $2D_Buff[SIZE][SIZE]
+/* display data buff */
+char display_buff[SCREEN_X][SCREEN_Y]
 
 /** 
   * @brief  Initialize the 3D Data Buffer
@@ -104,20 +109,26 @@ void project(char xyz)
                     for(x=0;x<=SIZE;x++)
                     {
                         if(0 != $3D_Buff[x][y][z])
-                            Display_Buff[y][z] = $3D_Buff[x][y][z];
+                        {
+                            $2D_Buff[y][z] = $3D_Buff[x][y][z];
+                            break;
+                        }
                         else
-                            Display_Buff[y][z] = 0;
-                    }break;
+                            $2D_Buff[y][z] = 0;
+                    }
         case 'y': 
             for(z=0;z<=SIZE;z++)
                 for(x=0;x<=SIZE;x++)
                     for(y=0;y<=SIZE;y++)
                     {
                         if(0 != $3D_Buff[x][y][z])
-                            Display_Buff[z][x] = $3D_Buff[x][y][z];
+                        {
+                            $2D_Buff[z][x] = $3D_Buff[x][y][z];
+                            break;
+                        }
                         else
-                            Display_Buff[z][x] = 0;
-                    }break;
+                            $2D_Buff[z][x] = 0;
+                    }
 
         case 'z': 
             for(x=0;x<=SIZE;x++)
@@ -125,10 +136,12 @@ void project(char xyz)
                     for(z=0;z<=SIZE;z++)
                     {
                         if(0 != $3D_Buff[x][y][z])
-                            Display_Buff[x][y] = $3D_Buff[x][y][z];
+                        {
+                            $2D_Buff[x][y] = $3D_Buff[x][y][z];
+                            break;
+                        }
                         else
-                            Display_Buff[x][y] = 0;
-                    }break;
+                            $2D_Buff[x][y] = 0;
+                    }
     }
 }
-
